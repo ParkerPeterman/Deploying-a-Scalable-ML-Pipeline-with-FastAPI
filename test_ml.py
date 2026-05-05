@@ -29,9 +29,9 @@ def test_process_data_output_types(data):
         training=True
     )
     
-    assert isinstance(X, np.ndarray)[cite: 4]
-    assert isinstance(y, np.ndarray)[cite: 4]
-    assert X.shape[0] == data.shape[0][cite: 4]
+    assert isinstance(X, np.ndarray)  
+    assert isinstance(y, np.ndarray)  
+    assert X.shape[0] == data.shape[0]  
 
 def test_train_model_algorithm():
     """
@@ -45,19 +45,19 @@ def test_train_model_algorithm():
     model = train_model(X_train, y_train)
     
     # Check if the model has the 'predict' method and is a classifier
-    assert hasattr(model, "predict")[cite: 4]
-    assert "RandomForestClassifier" in str(type(model))[cite: 4]
+    assert hasattr(model, "predict")  
+    assert "RandomForestClassifier" in str(type(model))  
 
 def test_compute_metrics_values():
     """
     Test if compute_model_metrics returns correct values for a perfect prediction scenario. 
-    In a perfect match, Precision, Recall, and F1 should all be 1.0.[cite: 4]
+    In a perfect match, Precision, Recall, and F1 should all be 1.0.  
     """
     y_true = np.array([0, 1, 0, 1])
     y_preds = np.array([0, 1, 0, 1])
     
     precision, recall, fbeta = compute_model_metrics(y_true, y_preds)
     
-    assert precision == 1.0[cite: 4]
-    assert recall == 1.0[cite: 4]
-    assert fbeta == 1.0[cite: 4]
+    assert precision == 1.0  
+    assert recall == 1.0  
+    assert fbeta == 1.0  
