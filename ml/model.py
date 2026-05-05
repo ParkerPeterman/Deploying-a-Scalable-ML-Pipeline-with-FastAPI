@@ -123,7 +123,7 @@ def performance_on_categorical_slice(
     """
     # TODO: implement the function
     X_slice, y_slice, _, _ = process_data(
-df_slice,
+        df_slice,
         categorical_features=categorical_features,
         label=label,
         training=False,
