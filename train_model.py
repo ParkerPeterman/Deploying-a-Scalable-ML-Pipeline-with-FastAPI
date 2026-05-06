@@ -20,7 +20,7 @@ data = pd.read_csv(data_path)
 
 # TODO: split the provided data to have a train dataset and a test dataset
 # Optional enhancement, use K-fold cross validation instead of a train-test split.
-train, test = train_test_split(data, test_size=0.20, random=42)
+train, test = train_test_split(data, test_size=0.20, random_state=42)
 
 # DO NOT MODIFY
 cat_features = [
@@ -36,10 +36,10 @@ cat_features = [
 
 # TODO: use the process_data function provided to process the data.
 X_train, y_train, encoder, lb = process_data(
-    # your code here
-    # use the train dataset 
-    # use training=True
-    # do not need to pass encoder and lb as input
+    train, 
+    categorical_features=cat_features, 
+    label="salary", 
+    training=True
     )
 
 X_test, y_test, _, _ = process_data(
@@ -74,8 +74,11 @@ print(f"Precision: {p:.4f} | Recall: {r:.4f} | F1: {fb:.4f}")
 
 # TODO: compute the performance on model slices using the performance_on_categorical_slice function
 # iterate through the categorical features
+output_file = "slice_output.txt"
+if os.path.exists(output_file):
+    os.remove(output_file) 
+
 for col in cat_features:
-    # iterate through the unique values in one categorical feature
     for slicevalue in sorted(test[col].unique()):
         count = test[test[col] == slicevalue].shape[0]
         p, r, fb = performance_on_categorical_slice(
@@ -88,6 +91,8 @@ for col in cat_features:
             lb=lb,
             model=model
         )
-        with open("slice_output.txt", "a") as f:
-            print(f"{col}: {slicevalue}, Count: {count:,}", file=f)
-            print(f"Precision: {p:.4f} | Recall: {r:.4f} | F1: {fb:.4f}", file=f)
+        
+        with open(output_file, "a") as f:
+            f.write(f"Feature: {col} | Value: {slicevalue} | Count: {count}\n")
+            f.write(f"Precision: {p:.4f} | Recall: {r:.4f} | F1: {fb:.4f}\n")
+            f.write("-" * 30 + "\n")

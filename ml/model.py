@@ -78,11 +78,13 @@ def save_model(model, path):
     """
     # TODO: implement the function
     with open(path, 'wb') as f:
-        return pickle.load(f)
+        return pickle.dump(model, f)
 
 def load_model(path):
     """ Loads pickle file from `path` and returns it."""
     # TODO: implement the function
+    with open(path, 'rb') as f:
+        return pickle.load(f)
     pass
 
 
@@ -123,7 +125,9 @@ def performance_on_categorical_slice(
 
     """
     # TODO: implement the function
+    slice_data = data[data[column_name] == slice_value]
     X_slice, y_slice, _, _ = process_data(
+        slice_data,
         categorical_features=categorical_features,
         label=label,
         training=False,
